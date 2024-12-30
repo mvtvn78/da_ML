@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dự đoán phần mềm độc hại Android</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>DỰ ĐOÁN PHẦN MỀM ĐỘC HẠI</h1>
+        <form action="/predict" method="post">
+            <div class="checkbox-group">
+                <script>
+                    
+                    const perArr = [
+                    { "permission": "android.permission.GET_ACCOUNTS", "description": "Quyền truy cập tài khoản" },
+                    { "permission": "com.sonyericsson.home.permission.BROADCAST_BADGE", "description": "Quyền phát sóng biểu tượng ứng dụng" },
+                    { "permission": "android.permission.READ_PROFILE", "description": "Quyền đọc hồ sơ người dùng" },
+                    { "permission": "android.permission.MANAGE_ACCOUNTS", "description": "Quyền quản lý tài khoản" },
+                    { "permission": "android.permission.WRITE_SYNC_SETTINGS", "description": "Quyền ghi cài đặt đồng bộ" },
+                    { "permission": "android.permission.READ_EXTERNAL_STORAGE", "description": "Quyền đọc bộ nhớ ngoài" },
+                    { "permission": "android.permission.RECEIVE_SMS", "description": "Quyền nhận tin nhắn SMS" },
+                    { "permission": "com.android.launcher.permission.READ_SETTINGS", "description": "Quyền đọc cài đặt của launcher" },
+                    { "permission": "android.permission.WRITE_SETTINGS", "description": "Quyền ghi cài đặt hệ thống" },
+                    { "permission": "com.google.android.providers.gsf.permission.READ_GSERVICES", "description": "Quyền đọc dịch vụ Google" },
+                    { "permission": "android.permission.DOWNLOAD_WITHOUT_NOTIFICATION", "description": "Quyền tải xuống mà không cần thông báo" },
+                    { "permission": "android.permission.GET_TASKS", "description": "Quyền lấy danh sách các tác vụ đang chạy" },
+                    { "permission": "android.permission.WRITE_EXTERNAL_STORAGE", "description": "Quyền ghi bộ nhớ ngoài" },
+                    { "permission": "android.permission.RECORD_AUDIO", "description": "Quyền ghi âm" },
+                    { "permission": "com.huawei.android.launcher.permission.CHANGE_BADGE", "description": "Quyền thay đổi biểu tượng ứng dụng trên launcher Huawei" },
+                    { "permission": "com.oppo.launcher.permission.READ_SETTINGS", "description": "Quyền đọc cài đặt của launcher Oppo" },
+                    { "permission": "android.permission.CHANGE_NETWORK_STATE", "description": "Quyền thay đổi trạng thái mạng" },
+                    { "permission": "com.android.launcher.permission.INSTALL_SHORTCUT", "description": "Quyền cài đặt shortcut trên launcher" },
+                    { "permission": "android.permission.android.permission.READ_PHONE_STATE", "description": "Quyền đọc trạng thái điện thoại" },
+                    { "permission": "android.permission.CALL_PHONE", "description": "Quyền gọi điện thoại" },
+                    { "permission": "android.permission.WRITE_CONTACTS", "description": "Quyền ghi danh bạ" },
+                    { "permission": "android.permission.READ_PHONE_STATE", "description": "Quyền đọc trạng thái điện thoại" },
+                    { "permission": "com.samsung.android.providers.context.permission.WRITE_USE_APP_FEATURE_SURVEY", "description": "Quyền ghi vào khảo sát sử dụng tính năng ứng dụng" },
+                    { "permission": "android.permission.MODIFY_AUDIO_SETTINGS", "description": "Quyền chỉnh sửa cài đặt âm thanh" },
+                    { "permission": "android.permission.ACCESS_LOCATION_EXTRA_COMMANDS", "description": "Quyền truy cập các lệnh bổ sung vị trí" },
+                    { "permission": "android.permission.INTERNET", "description": "Quyền truy cập internet" },
+                    { "permission": "android.permission.MOUNT_UNMOUNT_FILESYSTEMS", "description": "Quyền lắp và tháo hệ thống tệp" },
+                    { "permission": "com.majeur.launcher.permission.UPDATE_BADGE", "description": "Quyền cập nhật biểu tượng ứng dụng trên launcher" },
+                    { "permission": "android.permission.AUTHENTICATE_ACCOUNTS", "description": "Quyền xác thực tài khoản" },
+                    { "permission": "com.htc.launcher.permission.READ_SETTINGS", "description": "Quyền đọc cài đặt của launcher HTC" },
+                    { "permission": "android.permission.ACCESS_WIFI_STATE", "description": "Quyền truy cập trạng thái Wi-Fi" },
+                    { "permission": "android.permission.FLASHLIGHT", "description": "Quyền bật đèn pin" },
+                    { "permission": "android.permission.READ_APP_BADGE", "description": "Quyền đọc số lượng thông báo ứng dụng" },
+                    { "permission": "android.permission.USE_CREDENTIALS", "description": "Quyền sử dụng thông tin đăng nhập" },
+                    { "permission": "android.permission.CHANGE_CONFIGURATION", "description": "Quyền thay đổi cấu hình hệ thống" },
+                    { "permission": "android.permission.READ_SYNC_SETTINGS", "description": "Quyền đọc cài đặt đồng bộ" },
+                    { "permission": "android.permission.BROADCAST_STICKY", "description": "Quyền phát sóng thông báo đặc biệt" },
+                    { "permission": "com.anddoes.launcher.permission.UPDATE_COUNT", "description": "Quyền cập nhật số lượng thông báo trên launcher" },
+                    { "permission": "com.android.alarm.permission.SET_ALARM", "description": "Quyền cài đặt báo thức" },
+                    { "permission": "com.google.android.c2dm.permission.RECEIVE", "description": "Quyền nhận thông báo từ dịch vụ C2DM" },
+                    { "permission": "android.permission.KILL_BACKGROUND_PROCESSES", "description": "Quyền kết thúc các tiến trình nền" },
+                    { "permission": "com.sonymobile.home.permission.PROVIDER_INSERT_BADGE", "description": "Quyền cung cấp biểu tượng ứng dụng trên Sony Home" },
+                    { "permission": "com.sec.android.provider.badge.permission.READ", "description": "Quyền đọc biểu tượng ứng dụng trên Samsung" },
+                    { "permission": "android.permission.WRITE_CALENDAR", "description": "Quyền ghi vào lịch" },
+                    { "permission": "android.permission.SEND_SMS", "description": "Quyền gửi tin nhắn SMS" },
+                    { "permission": "com.huawei.android.launcher.permission.WRITE_SETTINGS", "description": "Quyền ghi cài đặt của launcher Huawei" },
+                    { "permission": "android.permission.REQUEST_INSTALL_PACKAGES", "description": "Quyền yêu cầu cài đặt ứng dụng" },
+                    { "permission": "android.permission.SET_WALLPAPER_HINTS", "description": "Quyền cài đặt gợi ý hình nền" },
+                    { "permission": "android.permission.SET_WALLPAPER", "description": "Quyền cài đặt hình nền" },
+                    { "permission": "com.oppo.launcher.permission.WRITE_SETTINGS", "description": "Quyền ghi cài đặt của launcher Oppo" },
+                    { "permission": "android.permission.RESTART_PACKAGES", "description": "Quyền khởi động lại các gói ứng dụng" },
+                    { "permission": "me.everything.badger.permission.BADGE_COUNT_WRITE", "description": "Quyền ghi số lượng biểu tượng thông báo" },
+                    { "permission": "android.permission.ACCESS_MOCK_LOCATION", "description": "Quyền truy cập vị trí giả" },
+                    { "permission": "android.permission.ACCESS_COARSE_LOCATION", "description": "Quyền truy cập vị trí thô" },
+                    { "permission": "android.permission.READ_LOGS", "description": "Quyền đọc các bản ghi hệ thống" },
+                    { "permission": "com.google.android.gms.permission.ACTIVITY_RECOGNITION", "description": "Quyền nhận diện hoạt động người dùng" },
+                    { "permission": "com.amazon.device.messaging.permission.RECEIVE", "description": "Quyền nhận thông báo từ dịch vụ Amazon" },
+                    { "permission": "android.permission.SYSTEM_ALERT_WINDOW", "description": "Quyền hiển thị cửa sổ cảnh báo hệ thống" },
+                    { "permission": "android.permission.DISABLE_KEYGUARD", "description": "Quyền vô hiệu hóa màn hình khóa" },
+                    { "permission": "android.permission.USE_FINGERPRINT", "description": "Quyền sử dụng vân tay" },
+                    { "permission": "me.everything.badger.permission.BADGE_COUNT_READ", "description": "Quyền đọc số lượng biểu tượng thông báo" },
+                    { "permission": "android.permission.CHANGE_WIFI_STATE", "description": "Quyền thay đổi trạng thái Wi-Fi" },
+                    { "permission": "android.permission.READ_CONTACTS", "description": "Quyền đọc danh bạ" },
+                    { "permission": "com.android.vending.BILLING", "description": "Quyền thanh toán trong ứng dụng" },
+                    { "permission": "android.permission.READ_CALENDAR", "description": "Quyền đọc lịch" },
+                    { "permission": "android.permission.RECEIVE_BOOT_COMPLETED", "description": "Quyền nhận thông báo khi khởi động hoàn tất" },
+                    { "permission": "android.permission.WAKE_LOCK", "description": "Quyền giữ cho thiết bị không bị ngủ" },
+                    { "permission": "android.permission.ACCESS_FINE_LOCATION", "description": "Quyền truy cập vị trí chính xác" },
+                    { "permission": "android.permission.BLUETOOTH", "description": "Quyền truy cập Bluetooth" },
+                    { "permission": "android.permission.CAMERA", "description": "Quyền sử dụng camera" },
+                    { "permission": "com.android.vending.CHECK_LICENSE", "description": "Quyền kiểm tra giấy phép ứng dụng" },
+                    { "permission": "android.permission.FOREGROUND_SERVICE", "description": "Quyền chạy dịch vụ nền trước" },
+                    { "permission": "android.permission.BLUETOOTH_ADMIN", "description": "Quyền quản lý Bluetooth" },
+                    { "permission": "android.permission.VIBRATE", "description": "Quyền rung thiết bị" },
+                    { "permission": "android.permission.NFC", "description": "Quyền truy cập NFC" },
+                    { "permission": "android.permission.RECEIVE_USER_PRESENT", "description": "Quyền nhận thông báo người dùng đã hiện diện" },
+                    { "permission": "android.permission.CLEAR_APP_CACHE", "description": "Quyền xóa bộ nhớ đệm ứng dụng" },
+                    { "permission": "com.android.launcher.permission.UNINSTALL_SHORTCUT", "description": "Quyền gỡ bỏ shortcut từ launcher" },
+                    { "permission": "com.sec.android.iap.permission.BILLING", "description": "Quyền thanh toán trong ứng dụng trên Samsung" },
+                    { "permission": "com.htc.launcher.permission.UPDATE_SHORTCUT", "description": "Quyền cập nhật shortcut trên HTC launcher" },
+                    { "permission": "com.sec.android.provider.badge.permission.WRITE", "description": "Quyền ghi biểu tượng ứng dụng trên Samsung" },
+                    { "permission": "android.permission.ACCESS_NETWORK_STATE", "description": "Quyền truy cập trạng thái mạng" },
+                    { "permission": "com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE", "description": "Quyền kết nối dịch vụ giới thiệu cài đặt từ Google Play" },
+                    { "permission": "com.huawei.android.launcher.permission.READ_SETTINGS", "description": "Quyền đọc cài đặt của launcher Huawei" },
+                    { "permission": "android.permission.READ_SMS", "description": "Quyền đọc tin nhắn SMS" },
+                    { "permission": "android.permission.PROCESS_INCOMING_CALLS", "description": "Quyền xử lý cuộc gọi đến" },
+                    ];
+                    for (let i = 0; i <perArr.length; i++) {
+                        document.write(`
+                            <label class="checkbox-wrapper">
+                                <input type="checkbox" id="check${i}" name="check${i}">
+                                <span>${perArr[i].description}</span>
+                            </label>
+                        `);
+                    }
+                </script>
+            </div>
+            <button type="submit">Dự đoán</button>
+        </form>
+    </div>
+</body>
+</html>

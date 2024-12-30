@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thông báo dự đoán</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/predict.css') }}">
+</head>
+<body>
+  <div class="notification-box">
+    <h1>KẾT QUẢ DỰ ĐOÁN</h1>
+    {% if pred == 1 %} 
+    <p>Phần mềm bạn được dự đoán là <b> phần mềm độc hại </b></p>
+    {% else %}
+    <p>Phần mềm bạn được dự đoán là không phần mềm độc hại</p>
+    {% endif %}
+    <a href="/">Quay lại trang chủ</a>
+  </div>
+</body>
+</html>

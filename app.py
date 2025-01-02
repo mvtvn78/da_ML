@@ -11,8 +11,8 @@ with open('./model/xgmodel', 'rb') as f:
 @app.route("/predict", methods=["POST"])
 def predict():
      if request.method == 'POST':
-            checkbox_values = [0]*86
-            for i in range(86):
+            checkbox_values = [0]*85
+            for i in range(85):
                 getCheckBox =  request.form.get(f'check{i}', '0') 
                 valueCheckBox = 0 if getCheckBox =='0' else 1
                 checkbox_values[i] = valueCheckBox
